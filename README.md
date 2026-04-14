@@ -1,35 +1,30 @@
 # sales-proposal-skills
 
-営業提案資料を artifact 駆動で段階設計し、最終的に PPTX まで生成する skill です。
+営業提案資料を段階的に設計し、最終的に組み込みの PPTX 機能で提案資料を作る skill です。
 
 ## 前提条件
 
-- Node.js
-- Python 3
-- `pyyaml`
-
-依存のセットアップ:
-
-```bash
-npm install
-pip install pyyaml
-```
+- Claude の skill 実行環境
+- 組み込み `pptx` スキルが利用できること
 
 ## 使い方
 
-```bash
-python3 scripts/init_proposal_artifacts.py --cwd .
-python3 scripts/validate_proposal_artifacts.py --cwd . --write-validation
-node scripts/render_pptx.js --cwd . --output .proposal/proposal.pptx
-```
+案件情報、議事録、RFP、製品情報などを渡して、提案資料を作りたいと伝えてください。
+
+この skill は次の順で進みます。
+
+1. 事実整理
+2. 不足情報と仮説の分離
+3. 提案戦略の策定
+4. 課題と解決策の対応付け
+5. スライド構成の設計
+6. セルフチェック
+7. PPTX 生成
 
 主な成果物:
 
-- `.proposal/10_facts.md`
-- `.proposal/20_gaps_and_assumptions.md`
-- `.proposal/30_strategy.md`
-- `.proposal/40_solution_map.md`
-- `.proposal/50_outline.md`
-- `.proposal/60_validation.md`
-- `.proposal/70_deck_draft.md`
-- `.proposal/proposal.pptx`
+- 提案の事実整理
+- 仮説と要確認事項
+- 提案戦略
+- スライド構成
+- 最終 PPTX
