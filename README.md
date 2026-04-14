@@ -2,12 +2,6 @@
 
 営業提案資料を artifact 駆動で段階設計し、最終的に PPTX まで生成する skill です。
 
-## インストール
-
-```bash
-claude skill install tomato414941/sales-proposal-skills
-```
-
 ## 前提条件
 
 - Node.js
