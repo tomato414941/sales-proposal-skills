@@ -1,4 +1,0 @@
-interface:
-  display_name: "Proposal Orchestrator"
-  short_description: "営業提案を段階的に設計して資料化する実務 skill"
-  default_prompt: "$proposal-orchestrator を使って、案件資料からレビュー可能な営業提案デッキと PPTX 下書きを作ってください。"

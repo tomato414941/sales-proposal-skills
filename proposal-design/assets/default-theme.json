@@ -1,0 +1,22 @@
+{
+  "layout": "LAYOUT_WIDE",
+  "author": "proposal-design",
+  "company": "sales-proposal-skills",
+  "subject": "Sales proposal draft",
+  "lang": "ja-JP",
+  "theme": {
+    "primary": "1F3A5F",
+    "accent": "2F6BFF",
+    "text": "1E2430",
+    "muted": "667085",
+    "surface": "F7F9FC",
+    "border": "D8DEE9",
+    "success": "1F9D55",
+    "warning": "C77D00"
+  },
+  "fonts": {
+    "heading": "Arial",
+    "body": "Arial",
+    "mono": "Courier New"
+  }
+}
