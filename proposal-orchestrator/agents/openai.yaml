@@ -1,0 +1,4 @@
+interface:
+  display_name: "Proposal Orchestrator"
+  short_description: "営業提案を段階的に設計して資料化する実務 skill"
+  default_prompt: "Use $proposal-orchestrator to turn my deal materials into a reviewable sales proposal deck and PPTX draft."
