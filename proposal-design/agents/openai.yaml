@@ -1,6 +1,0 @@
-interface:
-  display_name: "Proposal Design"
-  short_description: "営業提案をartifact駆動で設計しPPTX化する主 skill"
-  default_prompt: "$proposal-design を使って、案件情報から .proposal 配下の提案artifactと proposal.pptx を生成してください。"
-policy:
-  allow_implicit_invocation: false

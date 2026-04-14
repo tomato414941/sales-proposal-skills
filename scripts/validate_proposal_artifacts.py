@@ -178,12 +178,16 @@ def check_facts(path: Path, body: str, findings: list[Finding]) -> None:
             add_finding(findings, "WARNING", "W101", path.name, f"推測表現が facts に含まれています: {pattern.pattern}")
 
 
-def check_outline(path: Path, body: str, findings: list[Finding]) -> None:
+def check_outline(path: Path, frontmatter: dict, body: str, findings: list[Finding]) -> None:
     if path.name != "50_outline.md":
         return
     slide_blocks = re.findall(r"### Slide \d+.*?(?=\n### Slide \d+|\Z)", body, flags=re.S)
     if not slide_blocks:
-        add_finding(findings, "ERROR", "E201", path.name, "スライド定義がありません。")
+        status = frontmatter.get("status")
+        if status == "draft":
+            add_finding(findings, "WARNING", "W201", path.name, "スライド定義がまだありません。")
+        else:
+            add_finding(findings, "ERROR", "E201", path.name, "スライド定義がありません。")
         return
     for block in slide_blocks:
         for label in ("- タイトル:", "- 1枚1メッセージ:", "- 根拠:", "- 必要図表:", "- 話すポイント:"):
@@ -300,7 +304,7 @@ def main() -> int:
         check_frontmatter(path, frontmatter, findings)
         check_sections(path, body, findings)
         check_facts(path, body, findings)
-        check_outline(path, body, findings)
+        check_outline(path, frontmatter, body, findings)
         check_deck_draft(path, body, findings)
 
     check_status_transitions(proposal_dir, file_data, findings)

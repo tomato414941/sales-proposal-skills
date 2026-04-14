@@ -4,7 +4,7 @@
   "private": true,
   "description": "Skills and utilities for staged sales proposal design.",
   "scripts": {
-    "render:pptx": "node proposal-design/scripts/render_pptx.js"
+    "render:pptx": "node scripts/render_pptx.js"
   },
   "dependencies": {
     "pptxgenjs": "^4.0.1"
