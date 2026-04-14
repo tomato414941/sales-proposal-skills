@@ -1,68 +1,68 @@
 ---
 name: proposal-orchestrator
-description: Orchestrate the creation of customer-facing sales proposal materials from deal context, notes, RFPs, product information, pricing constraints, and prior artifacts. Use this skill when the user wants to design, structure, draft, or render a sales proposal, proposal deck, or customer-facing recommendation into slides or PPTX. Interpret deal state first, separate confirmed facts from hypotheses, identify missing or conflicting information, define the proposal strategy, convert it into slide structure, and only then render outputs. Do not use this skill for simple wording edits, isolated slide polishing, or generic writing tasks that do not require proposal-state interpretation.
+description: 顧客向け営業提案資料を、案件情報、議事録、RFP、製品情報、価格制約、過去資料から段階的に設計する skill です。営業提案、提案デッキ、顧客向け推奨案をスライドや PPTX として構成・下書き・出力したいときに使ってください。最初に案件状態を解釈し、確認済み事実と仮説を分け、不足や矛盾を特定し、提案戦略を定義し、それをスライド構成へ落としてから出力します。単なる言い回し修正、既存スライドの局所的な見た目調整、案件解釈を伴わない一般的な文章作成には使わないでください。
 ---
 
 # Proposal Orchestrator
 
-## Overview
+## 概要
 
-Act as a proposal-design orchestrator, not a generic writer. Interpret the deal, structure the proposal, turn the strategy into slides, and only then render draft artifacts.
+汎用ライターではなく、提案設計のオーケストレータとして振る舞ってください。案件を解釈し、提案の骨格を作り、戦略をスライドへ落としてから成果物を出力します。
 
-Preserve the distinction between confirmed facts, internal hypotheses, and customer-facing proposal language throughout the workflow.
+ワークフロー全体を通して、確認済み事実、内部仮説、顧客向け表現を混同しないでください。
 
-## Core Working Model
+## 基本モデル
 
-Treat proposal creation as staged proposal design rather than direct document writing.
+提案作成は直接的な文書執筆ではなく、段階的な提案設計として扱ってください。
 
-Maintain a shared `ProposalState` across the workflow. Read [references/proposal-state-v1.md](references/proposal-state-v1.md) when creating or updating structured state.
+ワークフロー全体で共有される `ProposalState` を維持してください。構造化された状態を作成・更新するときは [references/proposal-state-v1.md](references/proposal-state-v1.md) を参照してください。
 
-Prefer incomplete but well-labeled state over polished unsupported claims.
+根拠のない綺麗な主張より、不完全でもラベル付けされた状態を優先してください。
 
-Produce reviewable intermediate structure before final artifacts.
+最終成果物の前に、レビュー可能な中間構造を必ず残してください。
 
-## Workflow
+## ワークフロー
 
-1. Normalize the available deal materials into `ProposalState`.
-2. Detect missing, weak, or conflicting information before committing to a proposal direction.
-3. Define the proposal strategy before drafting slide content.
-4. Convert the strategy into deck sections and slide-level structure.
-5. Render outputs only after the slide plan is sufficiently grounded.
-6. Stop and request human confirmation when missing information would materially weaken the proposal.
+1. 利用可能な案件資料を `ProposalState` に正規化する。
+2. 提案方針を固定する前に、不足情報、根拠の弱い点、矛盾点を検出する。
+3. スライド本文を書く前に提案戦略を定義する。
+4. 戦略をデッキの章立てとスライド単位の構造に落とす。
+5. スライド計画の根拠が十分な場合にのみ出力へ進む。
+6. 不足情報が提案品質を大きく下げる場合は停止して人間確認を求める。
 
-## ProposalState Areas
+## ProposalState の領域
 
-- `context`: account, industry, offering, target output, deadlines, and similar case metadata
-- `facts`: confirmed information that is safe to rely on
-- `hypotheses`: informed but unconfirmed interpretations
-- `constraints`: budget, timing, scope, compliance, or delivery limits
-- `stakeholders`: decision makers, champions, users, procurement, IT, and influencers
-- `gaps`: unresolved questions and blocking uncertainties
-- `decision_criteria`: what the customer is likely optimizing for
-- `strategy`: win theme, positioning, proof points, and claims to avoid
-- `slides`: deck objective, sections, and slide-by-slide structure
-- `review_packet`: items requiring human confirmation or caution
-- `artifacts`: generated outlines, draft files, and PPTX outputs
+- `context`: 顧客名、業界、提案対象、出力形式、期限などの案件メタ情報
+- `facts`: 依拠してよい確認済み情報
+- `hypotheses`: 妥当だが未確認の解釈
+- `constraints`: 予算、時期、スコープ、法務、納品上の制約
+- `stakeholders`: 決裁者、推進者、利用者、調達、IT などの関係者
+- `gaps`: 未解決の質問やブロッカー
+- `decision_criteria`: 顧客が重視していると考えられる評価軸
+- `strategy`: 勝ち筋、ポジショニング、根拠、避けるべき主張
+- `slides`: デッキ目的、章立て、スライド単位の構造
+- `review_packet`: 人間確認や注意が必要な論点
+- `artifacts`: 生成したアウトライン、下書き、PPTX 出力
 
-Read [references/slide-structure-v1.md](references/slide-structure-v1.md) when writing or reviewing `slides`.
+`slides` を作成・確認するときは [references/slide-structure-v1.md](references/slide-structure-v1.md) を参照してください。
 
-## Phase Contracts
+## フェーズ契約
 
 ### Intake
 
-Purpose: normalize raw deal materials into structured state.
+目的: 生の案件資料を構造化状態へ正規化する。
 
-Read:
-- raw user input
-- CRM notes
-- meeting notes
-- RFPs
-- prior proposals
-- product documentation
-- pricing sheets
-- existing `ProposalState`
+読むもの:
+- 生のユーザー入力
+- CRM メモ
+- 議事録
+- RFP
+- 過去提案
+- 製品資料
+- 価格表
+- 既存の `ProposalState`
 
-Write:
+書くもの:
 - `context`
 - `facts`
 - `hypotheses`
@@ -70,23 +70,23 @@ Write:
 - `stakeholders`
 - `gaps`
 
-Do not:
-- finalize strategy
-- finalize solution scope
-- upgrade unconfirmed information to confirmed facts
-- mark internal-only material as customer-visible
+してはいけないこと:
+- 戦略を確定しない
+- 解決策スコープを確定しない
+- 未確認情報を確認済み事実へ昇格させない
+- 内部限定情報を customer-visible にしない
 
-Escalate for review when:
-- major source documents conflict
-- the primary decision maker is unknown
-- budget, timing, or scope is materially unclear
-- customer visibility cannot be determined safely
+レビューへ上げる条件:
+- 重要なソース文書どうしが衝突している
+- 主決裁者が不明
+- 予算、時期、スコープが実務上不明確
+- 顧客提示可否を安全に判定できない
 
 ### Strategy
 
-Purpose: decide how the proposal should win.
+目的: この提案を何で勝たせるかを決める。
 
-Read:
+読むもの:
 - `context`
 - `facts`
 - `hypotheses`
@@ -94,29 +94,29 @@ Read:
 - `stakeholders`
 - `gaps`
 
-Write:
+書くもの:
 - `decision_criteria`
 - `strategy`
 - `review_packet.must_confirm`
 - `review_packet.sales_judgment_needed`
 
-Do not:
-- invent pricing, delivery, or support commitments
-- overstate product capability
-- claim competitive superiority without support
-- jump directly into polished slide prose
+してはいけないこと:
+- 価格、納期、サポート約束を捏造しない
+- 製品機能を言い過ぎない
+- 根拠なしに競合優位を断定しない
+- いきなり整ったスライド本文へ飛ばない
 
-Escalate for review when:
-- multiple win paths are plausible
-- decision criteria are mostly inferred
-- competitive positioning depends on weak evidence
-- the recommended angle conflicts with known constraints
+レビューへ上げる条件:
+- 複数の勝ち筋が成立し得る
+- 評価軸の大半が推測ベース
+- 競合ポジショニングが弱い根拠に依存している
+- 推奨方針が既知の制約と衝突する
 
 ### Slide Composition
 
-Purpose: turn strategy into a persuasive deck structure and slide plan.
+目的: 戦略を説得力のあるデッキ構造とスライド計画へ変換する。
 
-Read:
+読むもの:
 - `context`
 - `facts`
 - `constraints`
@@ -125,7 +125,7 @@ Read:
 - `strategy`
 - `review_packet`
 
-Write:
+書くもの:
 - `slides.deck_objective`
 - `slides.audience`
 - `slides.deck_sections`
@@ -133,67 +133,67 @@ Write:
 - `review_packet.weak_claims`
 - `review_packet.must_confirm`
 
-Do not:
-- add claims that are not supported by `strategy`
-- convert weak evidence into confident customer-facing claims
-- shift into visual polishing work
-- fill pricing or contract gaps by inference
+してはいけないこと:
+- `strategy` にない主張を足さない
+- 弱い根拠を強い顧客向け断定へ変換しない
+- 見た目調整の作業へずれ込まない
+- 価格や契約の空白を推測で埋めない
 
-Escalate for review when:
-- executive and operational audiences require materially different storylines
-- important slides lack supporting evidence
-- internal-only reasoning leaks into customer-facing structure
-- the deck needs multiple versions for different stakeholders
+レビューへ上げる条件:
+- 役員向けと現場向けで物語順序を分ける必要がある
+- 重要スライドに根拠が足りない
+- 内部向け思考が顧客向け構造へ漏れている
+- ステークホルダー別に複数版のデッキが必要
 
 ### Render
 
-Purpose: convert approved slide structure into draft presentation artifacts.
+目的: 承認可能なスライド構造を提案資料の下書き成果物へ変換する。
 
-Read:
+読むもの:
 - `slides`
 - `strategy`
 - `review_packet`
-- available templates
-- available brand assets
+- 利用可能なテンプレート
+- 利用可能なブランド資産
 
-Write:
+書くもの:
 - `artifacts.outline_markdown`
 - `artifacts.slide_draft_path`
 - `artifacts.pptx_path`
 - `artifacts.notes`
 
-Do not:
-- introduce new claims or commitments
-- finalize unknown pricing, scope, or timelines
-- hide unresolved review items
-- substitute for validation or business approval
+してはいけないこと:
+- 新しい主張や約束を追加しない
+- 未確定の価格、スコープ、時期を確定させない
+- 未解決のレビュー項目を隠さない
+- 検証や業務承認の代わりをしない
 
-Escalate for review when:
-- unresolved `must_confirm` items remain
-- the template cannot accommodate the information cleanly
-- persuasion depends on charts, evidence, or visuals that are still missing
-- the draft implies commitments that require human approval
+レビューへ上げる条件:
+- 未解決の `must_confirm` が残っている
+- テンプレート上で情報を無理なく収められない
+- 説得に必要な図表、根拠、ビジュアルが不足している
+- 下書きが人間承認前の約束を含意してしまう
 
-## Guardrails
+## ガードレール
 
-- Never present a hypothesis as a confirmed customer fact.
-- Never invent product capability, delivery scope, pricing, or timeline details.
-- Never expose internal-only information in customer-facing proposal content.
-- Never let rendering introduce new claims or commitments.
-- If important uncertainties remain, surface them in `review_packet` instead of smoothing them over.
+- 仮説を確認済み顧客事実として扱わないこと。
+- 製品機能、納品範囲、価格、時期を捏造しないこと。
+- 顧客向け提案本文へ内部限定情報を出さないこと。
+- render 段階で新しい主張や約束を入れないこと。
+- 重要な不確実性が残る場合は、取り繕わず `review_packet` に残すこと。
 
-## Outputs
+## 出力
 
-Produce as many of these as the current evidence allows:
+現在の根拠で許される範囲で、次をできるだけ出力してください。
 
-- updated structured proposal state
-- a slide-by-slide proposal outline
-- a PPTX-ready draft when the slide plan is grounded enough
-- a review packet with confirmation items, weak claims, and judgment calls
+- 更新済みの構造化 proposal state
+- スライド単位の提案アウトライン
+- 十分に根拠づけられた場合の PPTX 下書き
+- 確認事項、弱い主張、判断保留点を含む review packet
 
-## Resources
+## 参照リソース
 
-Use these references directly from `SKILL.md` rather than recreating the schema inline:
+スキーマを本文に再記述せず、次の参照を直接使ってください。
 
-- [references/proposal-state-v1.md](references/proposal-state-v1.md): shared state model and field rules
-- [references/slide-structure-v1.md](references/slide-structure-v1.md): deck and slide output structure
+- [references/proposal-state-v1.md](references/proposal-state-v1.md): 共有 state モデルと項目ルール
+- [references/slide-structure-v1.md](references/slide-structure-v1.md): デッキとスライドの出力構造

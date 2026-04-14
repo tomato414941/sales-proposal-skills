@@ -1,12 +1,12 @@
 # Slide Structure v1
 
-Use this file when creating `slides` inside `ProposalState`.
+`ProposalState` 内の `slides` を作成するときはこのファイルを使ってください。
 
-## Goals
+## 目的
 
-- Keep slide composition structural before rendering.
-- Make each slide reviewable without requiring finished design work.
-- Separate slide intent from presenter detail.
+- rendering 前のスライド設計を構造中心で保つ。
+- 完成デザインがなくても各スライドをレビュー可能にする。
+- スライドの意図と話者向け補足を分離する。
 
 ## `slides` Shape
 
@@ -37,33 +37,33 @@ Use this file when creating `slides` inside `ProposalState`.
 }
 ```
 
-## Composition Rules
+## 構成ルール
 
-- Define the deck objective before composing individual slides.
-- Group slides under meaningful `deck_sections`; do not leave the deck as a flat list unless the deck is trivially short.
-- Make `key_message` a single claim or takeaway, not a paragraph.
-- Use `supporting_points` for the minimum argument structure needed to support the message.
-- Use `evidence_needed` for proof that is required but not yet embedded.
-- Use `speaker_notes_seed` for talking points, caveats, and nuances that may not belong on the slide face.
+- 個別スライドを書く前に、まず deck objective を定義してください。
+- スライドは意味のある `deck_sections` の下へまとめてください。極端に短いデッキ以外はフラットな列挙にしないでください。
+- `key_message` は段落ではなく、1つの主張または takeaway にしてください。
+- `supporting_points` には、その主張を支える最小限の論点を入れてください。
+- `evidence_needed` には、必要だがまだ埋め込まれていない根拠を入れてください。
+- `speaker_notes_seed` には、スライド面に載せない話し方、注意点、ニュアンスを入れてください。
 
-## Typical Section Patterns
+## 典型的な章立てパターン
 
-Use these as patterns, not mandatory templates.
+これは固定テンプレートではなく、あくまで典型パターンです。
 
-- Context and challenge
-- Why change now
-- Recommended approach
-- Solution scope
-- Expected value
-- Delivery or rollout plan
-- Commercials and assumptions
-- Next steps
+- 背景と課題
+- なぜ今変えるのか
+- 推奨アプローチ
+- 解決策の範囲
+- 期待効果
+- 導入または展開計画
+- 金額と前提条件
+- 次のアクション
 
-## Review Triggers
+## レビューが必要な条件
 
-Mark slide items as `review_needed` when:
+次の場合は slide item を `review_needed` にしてください。
 
-- the key message depends on weak or inferred evidence
-- the slide implies pricing, scope, or timeline certainty that is not approved
-- the intended audience is unclear
-- the slide is carrying internal-only reasoning that should move into `speaker_notes_seed` or `review_packet`
+- key message が弱い根拠や推測に依存している
+- スライドが未承認の価格、スコープ、時期の確定を含意している
+- 想定 audience が曖昧である
+- 内部限定の思考がスライド本体に乗っており、`speaker_notes_seed` か `review_packet` に逃がすべきである

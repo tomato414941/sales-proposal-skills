@@ -1,15 +1,15 @@
 # ProposalState v1
 
-Use this file when creating or updating the shared proposal state.
+共有 proposal state を作成・更新するときはこのファイルを使ってください。
 
-## Goals
+## 目的
 
-- Keep confirmed facts separate from hypotheses.
-- Preserve source traceability.
-- Mark whether content is safe for customer-facing output.
-- Keep the model focused on state areas instead of freeform narrative.
+- 確認済み事実と仮説を分離する。
+- 情報源を追跡できるようにする。
+- 顧客向け出力に使ってよい情報かどうかを明示する。
+- 自由文ではなく state の領域に沿って考えさせる。
 
-## Top-Level Shape
+## トップレベル構造
 
 ```json
 {
@@ -31,9 +31,9 @@ Use this file when creating or updating the shared proposal state.
 }
 ```
 
-## Shared Entry Shape
+## 共通エントリ構造
 
-Use this shape for entries in `facts`, `hypotheses`, `constraints`, and `decision_criteria` unless a more specific structure is defined elsewhere.
+`facts` `hypotheses` `constraints` `decision_criteria` の各要素は、別途専用構造がない限りこの形を使ってください。
 
 ```json
 {
@@ -51,11 +51,11 @@ Use this shape for entries in `facts`, `hypotheses`, `constraints`, and `decisio
 }
 ```
 
-## State Areas
+## State の領域
 
 ### `context`
 
-Use for proposal-level metadata such as:
+提案全体のメタ情報に使います。例:
 
 - `account_name`
 - `industry`
@@ -66,9 +66,9 @@ Use for proposal-level metadata such as:
 
 ### `facts`
 
-Use for confirmed information that can safely anchor proposal claims.
+提案の主張の根拠にしてよい確認済み情報に使います。
 
-Examples:
+例:
 
 - current customer environment
 - stated deadlines
@@ -77,9 +77,9 @@ Examples:
 
 ### `hypotheses`
 
-Use for informed but unconfirmed interpretations.
+妥当だが未確認の解釈に使います。
 
-Examples:
+例:
 
 - likely evaluation priority
 - suspected political dynamics
@@ -87,7 +87,7 @@ Examples:
 
 ### `constraints`
 
-Use for hard boundaries:
+変更できない制約に使います:
 
 - budget caps
 - scope exclusions
@@ -97,7 +97,7 @@ Use for hard boundaries:
 
 ### `stakeholders`
 
-Use the specialized shape below.
+以下の専用構造を使ってください。
 
 ```json
 {
@@ -120,7 +120,7 @@ Use the specialized shape below.
 
 ### `gaps`
 
-Use for unresolved questions and blockers.
+未解決の質問とブロッカーに使います。
 
 ```json
 {
@@ -135,7 +135,7 @@ Use for unresolved questions and blockers.
 
 ### `strategy`
 
-Use a single object rather than a loose note.
+ばらばらのメモではなく、単一オブジェクトで管理してください。
 
 ```json
 {
@@ -153,7 +153,7 @@ Use a single object rather than a loose note.
 
 ### `review_packet`
 
-Capture business review items that should not be hidden in slide prose.
+スライド本文に埋もれさせてはいけない業務レビュー項目を保持します。
 
 ```json
 {
@@ -168,7 +168,7 @@ Capture business review items that should not be hidden in slide prose.
 
 ### `artifacts`
 
-Use for generated files and output traces.
+生成ファイルと出力結果の記録に使います。
 
 ```json
 {
@@ -179,10 +179,10 @@ Use for generated files and output traces.
 }
 ```
 
-## Field Rules
+## 項目ルール
 
-- Mark uncertain information as `hypotheses` or `status: inferred`; do not push it into confirmed facts.
-- Set `customer_visible: false` by default when the item is internal reasoning, pricing nuance, approval status, or competitive speculation.
-- Use `confidence` to express evidence quality, not rhetorical confidence.
-- Preserve source references whenever information originates from a document, call note, or internal system.
-- Prefer small structured entries over large prose blocks.
+- 不確実な情報は `hypotheses` または `status: inferred` に置き、確認済み事実へ押し込まないでください。
+- 内部推論、価格の細則、承認状況、競合推測などは原則 `customer_visible: false` にしてください。
+- `confidence` は表現の強さではなく、根拠の質を表すために使ってください。
+- 文書、議事録、社内システムなどに由来する情報は source を残してください。
+- 長い散文より、小さい構造化エントリを優先してください。
